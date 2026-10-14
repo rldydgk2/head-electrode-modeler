@@ -13,6 +13,10 @@ layers to the scalp, and exports a piecewise linear complex (PLC) for TetGen.
 and electrode assembly. Internal tissues and tumor layers are hidden in this
 view; this is not an electric-field simulation.*
 
+The square-looking electrodes in this saved example are a coarse polygonal
+approximation of a circular electrode. Increasing the circumference resolution
+makes the outline closer to a circle; see [electrode shape resolution](#electrode-shape-resolution).
+
 ## What is included
 
 - A marked, multi-surface head model and a historical electrode example.
@@ -96,6 +100,34 @@ Coordinates and dimensions are interpreted in millimeters.
 | `r_1`, `r_2` | 5.0, 4.0 | Outer and inner tumor radii |
 | `center_x, center_y, center_z` | 33, -45, 23 | Tumor center |
 | `div_t`, `div_tz` | 30, 30 | Tumor angular and axial sampling |
+
+### Electrode shape resolution
+
+The electrode outline is constructed by sampling a circle of radius `a` and
+connecting adjacent samples with straight edges. A small number of edges gives
+a polygonal outline, such as a square; more edges produce a closer approximation
+to a circular electrode. This controls the shape of each electrode, independently
+of how many electrodes are placed in an array.
+
+Set `div_c` in `_initialize()` in `head_model/editor.py`. The implementation uses
+`np.linspace(0, 2 * np.pi, div_c)`, including both endpoints. Since the first and
+last samples coincide, **the number of distinct perimeter edges is `div_c - 1`**.
+
+| `div_c` | Perimeter edges | Outline |
+| ---: | ---: | --- |
+| 5 | 4 | Square |
+| 10 | 9 | Nine-sided polygon (current editor default) |
+| 17 | 16 | Finer approximation of a circle |
+| 33 | 32 | Near-circular polygon |
+
+For example, set `div_c = 33` for 32 perimeter edges, then restart the editor and
+generate a new model. Keep `a` unchanged to retain the same circumradius; polygon
+area approaches the area of the circle as the resolution increases. More samples
+also add vertices and facets and increase the surface-stitching workload.
+
+Changing this setting does not alter the bundled historical export or its PNG
+previews. Those show the geometry saved at the time; a rounder example requires
+newly generated electrode geometry.
 
 ## Repository layout
 

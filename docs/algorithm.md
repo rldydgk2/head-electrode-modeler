@@ -15,6 +15,16 @@ The geometry engine retains global node/facet dictionaries and the original
 intersection logic. It is a research artifact rather than a general-purpose
 mesh-processing library. The reader and renderer are separate, import-safe tools.
 
+## Polygonal approximation of circular electrodes
+
+`build_electrode_stack()` samples the circumference in the local tangent frame.
+`div_c` includes a repeated closing point, so `append_electrode_geometry()` stores
+`div_c - 1` distinct perimeter vertices per layer. Adjacent vertices form straight
+edges: `div_c = 5` produces a square, while `div_c = 33` produces a 32-sided
+approximation of a circle. Increasing this resolution refines the electrode
+outline and adds geometry for the contact-boundary tracing and stitching steps.
+The radius `a`, layer thicknesses, and array layout are separate parameters.
+
 ## Changes made during the refresh
 
 - Consolidated the maintained editor from the repository's March 2021 script.

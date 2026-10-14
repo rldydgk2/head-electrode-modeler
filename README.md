@@ -1,6 +1,6 @@
-# 3D Human Head Model for TetGen
+# Head Electrode Modeler
 
-Prepare head, tumor, and scalp-electrode geometry for tetrahedral meshing.
+Head, tumor, and scalp-electrode geometry preparation for TetGen.
 
 This repository preserves a research project developed in **2020–2021**, with
 an English documentation and packaging refresh in 2026. The original work builds
@@ -162,7 +162,7 @@ placement and a fresh TetGen volume mesh are not covered by these checks.
 ## Historical source and reuse
 
 The original scripts, including their original filenames and comments, remain in
-[Git history at revision 1faf827](https://github.com/rldydgk2/3d-human-head-model-by-tetgen/tree/1faf827).
+[Git history at revision 1faf827](https://github.com/rldydgk2/head-electrode-modeler/tree/1faf827).
 The current editor is derived from that revision's latest research script.
 Earlier experiments and duplicate text snapshots were removed from the current
 tree to make the maintained entry point clear.
